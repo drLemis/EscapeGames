@@ -68,7 +68,7 @@ function getRandomSecondName(){
 function getRandomWeapon(currentWeapon){
 	var weapon = ["nothing","pencil","baton","gun"]
 	var foundWeapon = weapon[Math.floor(Math.random()*(weapon.length))];
-	if (weapon.indexOf(currentWeapon)>weapon.indexOf(foundWeapon)){
+	if (weapon.indexOf(currentWeapon)>=weapon.indexOf(foundWeapon)){
 		return currentWeapon;
 	}
 	return foundWeapon;

@@ -1,37 +1,92 @@
-## Welcome to GitHub Pages
+<!DOCTYPE html>
+<html>
+<body>
+<button onclick="test()">Test!</button>
+<p id="result"></p>
 
-You can use the [editor on GitHub](https://github.com/drLemis/EscapeGames/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+<script>
+var member = [,,,];
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+function test(){
+	document.getElementById("result").innerHTML = "";
+	member[0] = createMember();
+	member[1] = createMember();
+	member[2] = createMember();
+	member[3] = createMember();
+	makeAction(member[0]);
+}
 
-```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
 
-- Bulleted
-- List
+function makeAction(activeMember) {
+    document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<p>" + activeMember[2]+" "+activeMember[3]+", "+activeMember[1]+", "+activeMember[4]+" with "+activeMember[5]+" in hands, "+getRandomAction(activeMember);
+	
+	
+	for (var i = 0; i < 3; i++) {
+		if (member[i][0]==0){
+			makeAction(member[i])
+		}
+	}
+}
 
-1. Numbered
-2. List
+function createMember(){
+	var gender = ["male", "female"];
+	var role = ["guard", "scientist", "technitian", "D-class", "visitor"];
+	
+	var activeMember = [,,,,,]
+	
+	activeMember[0] = 0;
+	activeMember[1] = gender[Math.floor(Math.random()*(gender.length))];
+	activeMember[2] = getRandomFirstName(activeMember[1])
+	activeMember[3] = getRandomSecondName();
+	activeMember[4] = role[Math.floor(Math.random()*(role.length))];
+	activeMember[5] = getRandomWeapon();
+		
+	return activeMember;
+	
+}
 
-**Bold** and _Italic_ and `Code` text
+function getRandomFirstName(gender){
+	var namePool = "";
+	if (gender=="male"){
+		namePool = ["Michael","Jacob","Alex","Tyler","Andrew","Daniel","John","Matthew","Ryan","Austin","David","Chris","Nick","Brandon","Nathan","Anthony","Ethan","Justin","Joshua","Jordan","Jake","Jack","Dylan","James","Kyle","Kevin","Ben","Noah","Eric","Sam","Christian","Josh","Zach","Joseph","Logan","Jonathan","Adam","Aaron","Jason","Christopher","Caleb","Brian","William","Robert","Joe","Luke","Matt","Cameron","Thomas","Hunter","Evan","Nicholas","Cody","Zachary","Chase","Mike","Jose","Steven","Max","Ian","Connor","Mark","Cole","Patrick","Sean","Samuel","Gabriel","Nate","Devin","Will","Alexander","Jeremy","Isaac","Jesse","Mason","Joey","Carlos","Bryan","Jared","Tanner","Peter","Tristan","Gavin","Shane","Seth","Stephen","Paul","Trevor","Elijah","Brendan","Isaiah","Zack","Marcus","Lucas","Garrett","Aidan","Luis","Charles"]; 
+	}
+	if (gender=="female"){
+		namePool = ["Hannah","Sarah","Ashley","Taylor","Jessica","Katie","Emma","Lauren","Samantha","Rachel","Olivia","Kayla","Anna","Megan","Alyssa","Alexis","Grace","Madison","Elizabet","Nicole","Amanda","Abby","Victoria","Brianna","Morgan","Amber","Sydney","Brittany","Haley","Natalie","Julia","Savannah","Danielle","Courtney","Rebecca","Paige","Jasmine","Sara","Stephanie","Jennifer","Mary","Chloe","Maddie","Lily","Michelle","Brooke","Jordan","Erin","Shelby","Kaitlyn","Jenna","Sierra","Hailey","Maria","Andrea","Destiny","Kate","Autumn","Allison","Zoe","Amy","Lexi","Sophia","Claire","Marissa","Abigail","Isabella","Molly","Kelsey","Kelly","Kaylee","Sophie","Laura","Alex","Mackenzie","Melissa","Tiffany","Christina","Leah","Caroline","Maggie","Alexa","Bailey","Heather","Caitlin","Katherine","Makayla","Cheyenne","Miranda","Erica","Vanessa","Mia","Madeline","Faith","Audrey","Gabby","Breanna","Jade"];
+	}
+	
+	return namePool[Math.floor(Math.random()*(namePool.length))];
+}
 
-[Link](url) and ![Image](src)
-```
+function getRandomSecondName(){
+	var namePool = ["Smith","Johnson","Williams","Jones","Brown","Davis","Miller","Wilson","Moore","Taylor","Anderson","Thomas","Jackson","White","Harris","Martin","Thompson","Garcia","Martinez","Robinson","Clark","Rodriguez","Lewis","Lee","Walker","Hall","Allen","Young","Hernandez","King","Wright","Lopez","Hill","Scott","Green","Adams","Baker","Gonzalez","Nelson","Carter","Mitchell","Perez","Roberts","Turner","Phillips","Campbell","Parker","Evans","Edwards","Collins","Stewart","Sanchez","Morris","Rogers","Reed","Cook","Morgan","Bell","Murphy","Bailey","Rivera","Cooper","Richardson","Cox","Howard","Ward","Torres","Peterson","Gray","Ramirez","James","Watson","Brooks","Kelly","Sanders","Price","Bennett","Wood","Barnes","Ross","Henderson","Coleman","Jenkins","Perry","Powell","Long","Patterson","Hughes","Flores","Washington","Butler","Simmons","Foster","Gonzales","Bryant","Alexander","Russell","Griffin","Diaz","Hayes"];
+	return namePool[Math.floor(Math.random()*(namePool.length))];
+}
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+function getRandomWeapon(){
+	var weapon = ["nothing","pencil","baton","gun"]
+	return weapon[Math.floor(Math.random()*(weapon.length))];
+}
 
-### Jekyll Themes
+function getRandomAction(activeMember){
+	var actions = ["dies in fight", "found ", "escaping with a vent shaft", "searching for supplies", "reaching the evacuation zone", "crying alone", "stalking another survivor", "commiting suicide"];
+	var activeAction = actions[Math.floor(Math.random() * (actions.length))];
+	if (activeAction=="dies in fight"||activeAction=="commiting suicide"){
+		activeMember[0]=1;
+	}
+	if (activeAction=="reaching the evacuation zone"){
+		activeMember[0]=2;
+	}
+	if (activeAction=="found "){
+		activeMember[5]=getRandomWeapon();
+		activeAction = activeAction+activeMember[5];
+	}
+	
+	return activeAction;
+}
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/drLemis/EscapeGames/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+</script>
+</body>
+</html>

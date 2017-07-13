@@ -116,7 +116,7 @@ function getRandomAction(activeMember){
 	}
 	
 	if (activeAction=="commiting suicide"){
-		if (activeMember[3]=="D-class"||activeMember[3]=="guard"){
+		if (activeMember[4]=="D-class"||activeMember[3]=="guard"){
 			activeAction = getRandomAction(activeMember);
 			return activeAction;
 		}

@@ -8,6 +8,13 @@
 
 
 <script>
+var maleFirstName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/MaleFirstName").split("\n").filter(String);
+var femaleFirstName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/FemaleFirstName").split("\n").filter(String);
+var secondName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/SecondName").split("\n").filter(String);
+var weaponPool = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/Weapon").split("\n").filter(String);
+
+
+
 var member = [,,,];
 var hour = 0;
 
@@ -43,8 +50,6 @@ function makeAction() {
 			}
 		}
 	}
-	
-	
 	if (aliveMembers>0){
 		newHour();
 	}
@@ -78,30 +83,19 @@ function createMember(){
 }
 
 function getRandomFirstName(gender){
-	var namePool = "";
-		
-
 	if (gender=="male"){
-		namePool = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/MaleFirstName").split("\n");
-	
+		return maleFirstName[Math.floor(Math.random()*(maleFirstName.length))];
 	}
-	if (gender=="female"){
-		namePool = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/FemaleFirstName").split("\n");
-	}
-	
-	return namePool[Math.floor(Math.random()*(namePool.length))];
+	return femaleFirstName[Math.floor(Math.random()*(femaleFirstName.length))];
 }
 
 function getRandomSecondName(){
-
-	var namePool = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/SecondName").split("\n");
-	return namePool[Math.floor(Math.random()*(namePool.length))];
+	return secondName[Math.floor(Math.random()*(secondName.length))];
 }
 
 function getRandomWeapon(currentWeapon){
-	var weapon = ["nothing","pencil","baton","gun"]
-	var foundWeapon = weapon[Math.floor(Math.random()*(weapon.length))];
-	if (weapon.indexOf(currentWeapon)>=weapon.indexOf(foundWeapon)){
+	var foundWeapon = weaponPool[Math.floor(Math.random()*(weaponPool.length))];
+	if (weaponPool.indexOf(currentWeapon)>=weaponPool.indexOf(foundWeapon)){
 		return currentWeapon;
 	}
 	return foundWeapon;
@@ -126,17 +120,15 @@ function getRandomAction(activeMember){
 		}
 		activeMember[5]=tempWeapon;
 		activeAction = activeAction+activeMember[5];
+		activeAction="<font color='blue'>"+activeAction+"</font>"
 	}
 	
 	return activeAction;
 }
 
 
-function httpGet(theUrl)
-  {
-    var xmlHttp = null;
-
-    xmlHttp = new XMLHttpRequest();
+function httpGet(theUrl) {
+    var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", theUrl, false );
     xmlHttp.send( null );
     return xmlHttp.responseText;

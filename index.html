@@ -8,6 +8,7 @@
 
 <script>
 var member = [,,,];
+var hour = 0;
 
 function test(){
 	document.getElementById("result").innerHTML = "";
@@ -15,20 +16,37 @@ function test(){
 	member[1] = createMember();
 	member[2] = createMember();
 	member[3] = createMember();
-	makeAction(member[0]);
+	hour = 0;
+	makeAction();
 }
 
 
 
-function makeAction(activeMember) {
-    document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<p>" + activeMember[2]+" "+activeMember[3]+", "+activeMember[1]+", "+activeMember[4]+" with "+activeMember[5]+" in hands, "+getRandomAction(activeMember);
-	
-	
-	for (var i = 0; i < 3; i++) {
+function makeAction() {
+	var aliveMembers = 0;
+	for (var i = 0; i <= 3; i++) {
 		if (member[i][0]==0){
-			makeAction(member[i])
+			displayAction(member[i]);
+			if (member[i][0]==0){
+				aliveMembers++;
+			}
 		}
 	}
+	
+	
+	if (aliveMembers>0&&hour<10){
+		newHour();
+	}
+}
+
+function displayAction(activeMember){
+	document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<p>" + activeMember[2]+" "+activeMember[3]+", "+activeMember[1]+", "+activeMember[4]+" with "+activeMember[5]+" in hands, "+getRandomAction(activeMember);
+}
+
+function newHour(){
+	hour++;
+	document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<p>" + "HOURS FROM COLLAPSE: "+ hour;
+	makeAction()
 }
 
 function createMember(){
@@ -78,9 +96,11 @@ function getRandomAction(activeMember){
 	var actions = ["dies in fight", "found ", "escaping with a vent shaft", "searching for supplies", "reaching the evacuation zone", "crying alone", "stalking another survivor", "commiting suicide"];
 	var activeAction = actions[Math.floor(Math.random() * (actions.length))];
 	if (activeAction=="dies in fight"||activeAction=="commiting suicide"){
+		activeAction="<font color='red'>"+activeAction+"</font>"
 		activeMember[0]=1;
 	}
 	if (activeAction=="reaching the evacuation zone"){
+		activeAction="<font color='green'>"+activeAction+"</font>"
 		activeMember[0]=2;
 	}
 	if (activeAction=="found "){

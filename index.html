@@ -11,6 +11,7 @@ var maleFirstName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGam
 var femaleFirstName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/FemaleFirstName").split("\n").filter(String);
 var secondName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/SecondName").split("\n").filter(String);
 var weaponPool = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/Weapon").split("\n").filter(String);
+var statesPool = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/State").split("\n").filter(String);
 
 var member = [];
 var hour = 0;
@@ -95,16 +96,26 @@ function getRandomWeapon(currentWeapon){
 }
 
 function getRandomAction(activeMember){
-	var actions = ["dies in fight", "found ", "escaping with a vent shaft", "searching for supplies", "reaching the evacuation zone", "crying alone", "stalking another survivor", "commiting suicide"];
-	var activeAction = actions[Math.floor(Math.random() * (actions.length))];
-	if (activeAction=="dies in fight"||activeAction=="commiting suicide"){
+	var activeAction = statesPool[Math.floor(Math.random() * (statesPool.length))];
+	
+	if (activeAction=="dies in fight"||activeAction=="dies from "||activeAction=="commiting suicide"){
+		if (activeAction=="dies from "){
+			var deathReason = ["toxic gas", "fall", "defence system turret", "non-cooperating with extraction team", "SCP-"];
+			activeAction=activeAction+deathReason[Math.floor(Math.random() * (deathReason.length))];
+			if (activeAction=="dies from SCP-"){
+				activeAction=activeAction+Math.floor(Math.random()*(2000))
+			}
+		}
+	
 		activeAction="<font color='red'>"+activeAction+"</font>"
 		activeMember[0]=1;
 	}
+	
 	if (activeAction=="reaching the evacuation zone"){
 		activeAction="<font color='green'>"+activeAction+"</font>"
 		activeMember[0]=2;
 	}
+	
 	if (activeAction=="found "){
 		var tempWeapon = getRandomWeapon(activeMember[5]);
 		if (tempWeapon==activeMember[5]){

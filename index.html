@@ -12,6 +12,9 @@ var femaleFirstName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeG
 var secondName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/SecondName").split("\n").filter(String);
 var weaponPool = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/Weapon").split("\n").filter(String);
 var statesPool = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/State").split("\n").filter(String);
+var SCPList = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/SCP").split("\n").filter(String);
+
+
 
 var member = [];
 var hour = 0;
@@ -103,7 +106,7 @@ function getRandomAction(activeMember){
 			var deathReason = ["toxic gas", "fall", "defence system turret", "non-cooperating with extraction team", "SCP-"];
 			activeAction=activeAction+deathReason[Math.floor(Math.random() * (deathReason.length))];
 			if (activeAction=="dies from SCP-"){
-				var number = Math.floor(Math.random()*(2000)+1)
+				var number = SCPList[Math.floor(Math.random() * (SCPList.length))];
 				activeAction="dies from <a target='_blank' href='http://scp.su/scp-"+number+"'>SCP-"+number+"</a>";
 			}
 		}

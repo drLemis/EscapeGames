@@ -7,9 +7,9 @@
 <p id="result"></p>
 
 <script>
-var maleFirstName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/MaleFirstName").split("\n").filter(String);
-var femaleFirstName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/FemaleFirstName").split("\n").filter(String);
-var secondName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/SecondName").split("\n").filter(String);
+var maleFirstName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/MaleName").split("\n").filter(String);
+var femaleFirstName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/FemaleName").split("\n").filter(String);
+var secondName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/SгиName").split("\n").filter(String);
 var weaponPool = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/Weapon").split("\n").filter(String);
 var statesPool = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/State").split("\n").filter(String);
 var SCPList = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/SCP").split("\n").filter(String);
@@ -54,12 +54,15 @@ function makeAction() {
 }
 
 function displayAction(activeMember){
-	document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<p>" + activeMember[2]+" "+activeMember[3]+", "+activeMember[1]+", "+activeMember[4]+" with "+activeMember[5]+" in hands, "+getRandomAction(activeMember);
+	document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<p>" + activeMember[2]
+		+" "+activeMember[3]+", "+activeMember[1]+", "+activeMember[4]+" with "+activeMember[5]+" in hands, "
+		+getRandomAction(activeMember);
 }
 
 function newHour(){
 	hour++;
-	document.getElementById("result").innerHTML = document.getElementById("result").innerHTML +"<br>" + "<font color='olive'>HOURS FROM COLLAPSE: "+ hour +"</font><br><br>";
+	document.getElementById("result").innerHTML = document.getElementById("result").innerHTML +"<br>" 
+		+"<font color='olive'>HOURS FROM COLLAPSE: "+ hour +"</font><br><br>";
 	makeAction()
 }
 

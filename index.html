@@ -84,7 +84,12 @@ function getRandomAction(activeMember){
 		activeMember[0]=2;
 	}
 	if (activeAction=="found "){
-		activeMember[5]=getRandomWeapon(activeMember[5]);
+		var tempWeapon = getRandomWeapon(activeMember[5]);
+		if (tempWeapon==activeMember[5]){
+			activeAction = getRandomAction(activeMember);
+			return activeAction;
+		}
+		activeMember[5]=tempWeapon;
 		activeAction = activeAction+activeMember[5];
 	}
 	

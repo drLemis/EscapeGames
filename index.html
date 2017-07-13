@@ -13,6 +13,7 @@ var secondName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/
 var weaponPool = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/Weapon").split("\n").filter(String);
 var statesPool = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/State").split("\n").filter(String);
 var SCPList = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/SCP").split("\n").filter(String);
+var deathReasons = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/DeathReasons").split("\n").filter(String);
 
 
 
@@ -101,33 +102,30 @@ function getRandomWeapon(currentWeapon){
 function getRandomAction(activeMember){
 	var activeAction = statesPool[Math.floor(Math.random() * (statesPool.length))];
 	
-	if (activeAction=="dies in fight"||activeAction=="dies from "){
-		if (activeAction=="dies from "){
-			var deathReason = ["toxic gas", "fall", "defence system turret", "non-cooperating with extraction team", "SCP-"];
-			activeAction=activeAction+deathReason[Math.floor(Math.random() * (deathReason.length))];
-			if (activeAction=="dies from SCP-"){
-				var number = SCPList[Math.floor(Math.random() * (SCPList.length))];
-				activeAction="dies from <a target='_blank' href='http://scp.su/scp-"+number+"'>SCP-"+number+"</a>";
+	if (activeAction=="dies"){
+		var death = deathReasons[Math.floor(Math.random() * (deathReasons.length))];
+		if (death==", commiting suicide"){
+			if (activeMember[4]=="D-class"||activeMember[4]=="guard"){
+				activeAction = getRandomAction(activeMember);
+				return activeAction;
 			}
 		}
-	
-		activeAction="<font color='red'>"+activeAction+"</font>"
-		activeMember[0]=1;
-	}
-	
-	if (activeAction=="commiting suicide"){
-		if (activeMember[4]=="D-class"||activeMember[3]=="guard"){
-			activeAction = getRandomAction(activeMember);
-			return activeAction;
+		
+		if (death==" from SCP-"){
+			var number = SCPList[Math.floor(Math.random() * (SCPList.length))];
+			activeAction="dies from <a target='_blank' href='http://scp.su/scp-"+number+"'>SCP-"+number+"</a>";
+			death="";
 		}
-		activeAction="<font color='red'>"+activeAction+"</font>"
+			
+		activeAction="<font color='red'>"+activeAction+death+"</font>"
 		activeMember[0]=1;
-	
+		return activeAction;
 	}
-	
+		
 	if (activeAction=="reach the evacuation zone"){
 		activeAction="<font color='green'>"+activeAction+"</font>"
 		activeMember[0]=2;
+		return activeAction;
 	}
 	
 	if (activeAction=="found "){
@@ -139,6 +137,7 @@ function getRandomAction(activeMember){
 		activeMember[5]=tempWeapon;
 		activeAction = activeAction+activeMember[5];
 		activeAction="<font color='blue'>"+activeAction+"</font>"
+		return activeAction;
 	}
 	
 	return activeAction;

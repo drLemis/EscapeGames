@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
+<p>Amount of members:<input id="membersAmount" type="number" min="1" max="100">
 <button onclick="test()">Test!</button>
 <p id="result"></p>
 
@@ -12,10 +13,19 @@ var hour = 0;
 
 function test(){
 	document.getElementById("result").innerHTML = "";
-	member[0] = createMember();
-	member[1] = createMember();
-	member[2] = createMember();
-	member[3] = createMember();
+	
+	if (document.getElementById('membersAmount').value < document.getElementById('membersAmount').min){
+		document.getElementById('membersAmount').value = document.getElementById('membersAmount').min;
+	}
+	if (document.getElementById('membersAmount').value > document.getElementById('membersAmount').max){
+		document.getElementById('membersAmount').value = document.getElementById('membersAmount').max;
+	}
+	
+	
+	for (var i = 0; i <= document.getElementById('membersAmount').value-1 ; i++){
+		member[i] = createMember();
+	}
+	
 	hour = 0;
 	makeAction();
 }
@@ -24,7 +34,7 @@ function test(){
 
 function makeAction() {
 	var aliveMembers = 0;
-	for (var i = 0; i <= 3; i++) {
+	for (var i = 0; i <= document.getElementById('membersAmount').value-1; i++) {
 		if (member[i][0]==0){
 			displayAction(member[i]);
 			if (member[i][0]==0){

@@ -24,10 +24,9 @@ function makeAction(activeMember) {
     document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<p>" + activeMember[2]+" "+activeMember[3]+", "+activeMember[1]+", "+activeMember[4]+" with "+activeMember[5]+" in hands, "+getRandomAction(activeMember);
 	
 	
-	for (var i = 0; i < 3; i++) {
+	for (var i = 0; i < 4; i++) {
 		if (member[i][0]==0){
 			makeAction(member[i])
-			break;
 		}
 	}
 }

@@ -16,11 +16,11 @@ function test(){
 	
 	console.log(document.getElementById('membersAmount').min+" "+document.getElementById('membersAmount').max + " " + document.getElementById('membersAmount').value);
 	
-	if (document.getElementById('membersAmount').value < document.getElementById('membersAmount').min){
+	if (document.getElementById('membersAmount').value <= document.getElementById('membersAmount').min){
 		document.getElementById('membersAmount').value = document.getElementById('membersAmount').min;
 	}
 	
-	if (document.getElementById('membersAmount').value > document.getElementById('membersAmount').max){
+	if (document.getElementById('membersAmount').value >= document.getElementById('membersAmount').max||document.getElementById('membersAmount').value >=100){
 		document.getElementById('membersAmount').value = document.getElementById('membersAmount').max;
 	}
 	
@@ -47,7 +47,7 @@ function makeAction() {
 	}
 	
 	
-	if (aliveMembers>0&&hour<10){
+	if (aliveMembers>0){
 		newHour();
 	}
 }

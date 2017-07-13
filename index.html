@@ -2,7 +2,7 @@
 <html>
 <body>
 <p>Amount of members:<input id="membersAmount" type="number" min="1" max="50">
-<button onclick="test()">Test!</button>
+<button onclick="test()">Collapse!</button>
 <p id="result"></p>
 
 
@@ -19,13 +19,13 @@ var member = [,,,];
 var hour = 0;
 
 function test(){
-	document.getElementById("result").innerHTML = "";
+	document.getElementById("result").innerHTML = "COLLAPSE!<br><br>";
 	
-	if (document.getElementById('membersAmount').value <= document.getElementById('membersAmount').min){
+	if (+document.getElementById('membersAmount').value <= +document.getElementById('membersAmount').min){
 		document.getElementById('membersAmount').value = document.getElementById('membersAmount').min;
 	}
 	
-	if (document.getElementById('membersAmount').value >= document.getElementById('membersAmount').max||document.getElementById('membersAmount').value >=100){
+	if (+document.getElementById('membersAmount').value >= +document.getElementById('membersAmount').max||document.getElementById('membersAmount').value >=100){
 		document.getElementById('membersAmount').value = document.getElementById('membersAmount').max;
 	}
 	
@@ -61,7 +61,7 @@ function displayAction(activeMember){
 
 function newHour(){
 	hour++;
-	document.getElementById("result").innerHTML = document.getElementById("result").innerHTML +"<p>" + "<p>" + "HOURS FROM COLLAPSE: "+ hour+"<p>";
+	document.getElementById("result").innerHTML = document.getElementById("result").innerHTML +"<br>" + "HOURS FROM COLLAPSE: "+ hour +"<br><br>";
 	makeAction()
 }
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-<p>Amount of members:<input id="membersAmount" type="number" min="1" max="100">
+<p>Amount of members:<input id="membersAmount" type="number" min="1" max="50">
 <button onclick="test()">Test!</button>
 <p id="result"></p>
 
@@ -14,9 +14,12 @@ var hour = 0;
 function test(){
 	document.getElementById("result").innerHTML = "";
 	
+	console.log(document.getElementById('membersAmount').min+" "+document.getElementById('membersAmount').max + " " + document.getElementById('membersAmount').value);
+	
 	if (document.getElementById('membersAmount').value < document.getElementById('membersAmount').min){
 		document.getElementById('membersAmount').value = document.getElementById('membersAmount').min;
 	}
+	
 	if (document.getElementById('membersAmount').value > document.getElementById('membersAmount').max){
 		document.getElementById('membersAmount').value = document.getElementById('membersAmount').max;
 	}

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
-<body>
+<body bgcolor="#F0F0F0" text="black">
+<center>
 <p>Amount of members:<input id="membersAmount" type="number" min="1" max="50">
-<button onclick="test()">Collapse!</button>
+<button onclick="start()">Collapse!</button>
 <p id="result"></p>
-
-
 
 <script>
 var maleFirstName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/MaleFirstName").split("\n").filter(String);
@@ -13,22 +12,17 @@ var femaleFirstName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeG
 var secondName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/SecondName").split("\n").filter(String);
 var weaponPool = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/Weapon").split("\n").filter(String);
 
-
-
-var member = [,,,];
+var member = [];
 var hour = 0;
 
-function test(){
-	document.getElementById("result").innerHTML = "COLLAPSE!<br><br>";
-	
+function start(){
+	document.getElementById("result").innerHTML = "<font color='olive'>COLLAPSE!</font><br><br>";
 	if (+document.getElementById('membersAmount').value <= +document.getElementById('membersAmount').min){
 		document.getElementById('membersAmount').value = document.getElementById('membersAmount').min;
 	}
-	
 	if (+document.getElementById('membersAmount').value >= +document.getElementById('membersAmount').max||document.getElementById('membersAmount').value >=100){
 		document.getElementById('membersAmount').value = document.getElementById('membersAmount').max;
 	}
-	
 	
 	for (var i = 0; i <= document.getElementById('membersAmount').value-1 ; i++){
 		member[i] = createMember();
@@ -37,8 +31,6 @@ function test(){
 	hour = 0;
 	makeAction();
 }
-
-
 
 function makeAction() {
 	var aliveMembers = 0;
@@ -53,6 +45,7 @@ function makeAction() {
 	if (aliveMembers>0){
 		newHour();
 	}
+	endGame();
 }
 
 function displayAction(activeMember){
@@ -61,7 +54,7 @@ function displayAction(activeMember){
 
 function newHour(){
 	hour++;
-	document.getElementById("result").innerHTML = document.getElementById("result").innerHTML +"<br>" + "HOURS FROM COLLAPSE: "+ hour +"<br><br>";
+	document.getElementById("result").innerHTML = document.getElementById("result").innerHTML +"<br>" + "<font color='olive'>HOURS FROM COLLAPSE: "+ hour +"</font><br><br>";
 	makeAction()
 }
 
@@ -135,5 +128,6 @@ function httpGet(theUrl) {
   }
 
 </script>
+</center>
 </body>
 </html>

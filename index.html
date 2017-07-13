@@ -46,7 +46,7 @@ function makeAction() {
 	if (aliveMembers>0){
 		newHour();
 	}
-	endGame();
+	//endGame();
 }
 
 function displayAction(activeMember){
@@ -103,7 +103,8 @@ function getRandomAction(activeMember){
 			var deathReason = ["toxic gas", "fall", "defence system turret", "non-cooperating with extraction team", "SCP-"];
 			activeAction=activeAction+deathReason[Math.floor(Math.random() * (deathReason.length))];
 			if (activeAction=="dies from SCP-"){
-				activeAction=activeAction+Math.floor(Math.random()*(2000))
+				var number = Math.floor(Math.random()*(2000)+1)
+				activeAction="dies from <a target='_blank' href='http://scp.su/scp-"+number+"'>SCP-"+number+"</a>";
 			}
 		}
 	

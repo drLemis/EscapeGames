@@ -101,7 +101,7 @@ function getRandomWeapon(currentWeapon){
 function getRandomAction(activeMember){
 	var activeAction = statesPool[Math.floor(Math.random() * (statesPool.length))];
 	
-	if (activeAction=="dies in fight"||activeAction=="dies from "||activeAction=="commiting suicide"){
+	if (activeAction=="dies in fight"||activeAction=="dies from "){
 		if (activeAction=="dies from "){
 			var deathReason = ["toxic gas", "fall", "defence system turret", "non-cooperating with extraction team", "SCP-"];
 			activeAction=activeAction+deathReason[Math.floor(Math.random() * (deathReason.length))];

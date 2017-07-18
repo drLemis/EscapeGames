@@ -3,7 +3,7 @@
 
 <body bgcolor="#F0F0F0" text="black">
 	<center>
-		<p>Version: 0.1.5
+		<p>Version: 0.1.6
 		<p id="generation">Amount of members:<input id="membersAmount" type="number" min="1" max="9001"> <button onclick="start()">Collapse!</button></p>
 			<p id="result"></p>
 
@@ -21,6 +21,13 @@
 				var fullLog = "";
 				var hourLog = "";
 
+				//colors
+				var colorAlert = "darkred";
+				var colorInfo = "navy";
+				var colorSafe = "green";
+				var colorNeutral = "gray";
+				var colorContrast = "white";
+
 				function restart(){
 					document.getElementById("generation").innerHTML = 'Amount of members:<input id="membersAmount" type="number" min="1" max="9001"> <button onclick="start()">Collapse!';
 					document.getElementById("result").innerHTML = '';
@@ -28,7 +35,7 @@
 
 				function start() {
 					fullLog = "";
-					hourLog = "<font color='red'>======== COLLAPSE! ========</font><br>";
+					hourLog = "<font color='" + colorAlert + "'>======== COLLAPSE! ========</font><span><br>";
 					hour = 0;
 					if (+document.getElementById('membersAmount').value <= +document.getElementById('membersAmount').min) {
 						document.getElementById('membersAmount').value = document.getElementById('membersAmount').min;
@@ -102,7 +109,7 @@
 					// document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br>" +
 						// "<font color='red'>======== HOURS FROM COLLAPSE: " + hour + " ========</font><br><br>";
 
-						hourLog = "<font color='red'>======== HOURS FROM COLLAPSE: " + hour + " ========</font><br>";
+						hourLog = "<font color='" + colorAlert + "'>======== HOURS FROM COLLAPSE: " + hour + " ========</font><br>";
 					makeAction()
 				}
 
@@ -161,13 +168,13 @@
 							death = "";
 						}
 
-						activeAction = "<font color='red'>" + activeAction + death + "</font>"
+						activeAction = "<font color='" + colorAlert + "'>" + activeAction + death + "</font>"
 						activeMember[0] = 1;
 						return activeAction;
 					}
 
 					if (activeAction == "reach the evacuation zone") {
-						activeAction = "<font color='green'>" + activeAction + "</font>"
+						activeAction = "<font color='" + colorSafe + "'>" + activeAction + "</font>"
 						activeMember[0] = 2;
 						return activeAction;
 					}
@@ -180,7 +187,7 @@
 						}
 						activeMember[5] = tempWeapon;
 						activeAction = activeAction + activeMember[5];
-						activeAction = "<font color='blue'>" + activeAction + "</font>"
+						activeAction = "<font color='" + colorInfo + "'>" + activeAction + "</font>"
 						return activeAction;
 					}
 

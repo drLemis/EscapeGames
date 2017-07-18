@@ -1,170 +1,173 @@
 <!DOCTYPE html>
 <html>
+
 <body bgcolor="#F0F0F0" text="black">
-<center>
-<p>Amount of members:<input id="membersAmount" type="number" min="1" max="50">
-<button onclick="start()">Collapse!</button>
-<p id="result"></p>
+	<center>
+		<p>Amount of members:<input id="membersAmount" type="number" min="1" max="50">
+			<button onclick="start()">Collapse!</button>
+			<p id="result"></p>
 
-<script>
-var maleFirstName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/MaleName").split("\n").filter(String);
-var femaleFirstName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/FemaleName").split("\n").filter(String);
-var secondName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/Surname").split("\n").filter(String);
-var weaponPool = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/Weapon").split("\n").filter(String);
-var statesPool = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/State").split("\n").filter(String);
-var SCPList = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/SCP").split("\n").filter(String);
-var deathReasons = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/DeathReasons").split("\n").filter(String);
+			<script>
+				var maleFirstName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/MaleName").split("\n").filter(String);
+				var femaleFirstName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/FemaleName").split("\n").filter(String);
+				var secondName = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/Surname").split("\n").filter(String);
+				var weaponPool = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/Weapon").split("\n").filter(String);
+				var statesPool = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/State").split("\n").filter(String);
+				var SCPList = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/SCP").split("\n").filter(String);
+				var deathReasons = httpGet("https://raw.githubusercontent.com/drLemis/EscapeGames/master/DeathReasons").split("\n").filter(String);
 
-var member = [];
-var hour = 0;
+				var member = [];
+				var hour = 0;
 
-function start(){
-	document.getElementById("result").innerHTML = "<font color='olive'>COLLAPSE!</font><br><br>";
-	if (+document.getElementById('membersAmount').value <= +document.getElementById('membersAmount').min){
-		document.getElementById('membersAmount').value = document.getElementById('membersAmount').min;
-	}
-	if (+document.getElementById('membersAmount').value >= +document.getElementById('membersAmount').max){
-		document.getElementById('membersAmount').value = document.getElementById('membersAmount').max;
-	}
+				function start() {
+					document.getElementById("result").innerHTML = "<font color='olive'>COLLAPSE!</font><br><br>";
+					if (+document.getElementById('membersAmount').value <= +document.getElementById('membersAmount').min) {
+						document.getElementById('membersAmount').value = document.getElementById('membersAmount').min;
+					}
+					if (+document.getElementById('membersAmount').value >= +document.getElementById('membersAmount').max) {
+						document.getElementById('membersAmount').value = document.getElementById('membersAmount').max;
+					}
 
-	for (var i = 0; i <= document.getElementById('membersAmount').value-1 ; i++){
-		member[i] = createMember();
-	}
+					for (var i = 0; i < document.getElementById('membersAmount').value; i++) {
+						member[i] = createMember();
+					}
+					alert(member);
+					hour = 0;
+					makeAction();
+				}
 
-	hour = 0;
-	makeAction();
-}
+				function makeAction() {
+					var aliveMembers = 0;
+					for (var i = 0; i <= document.getElementById('membersAmount').value - 1; i++) {
+						if (member[i][0] == 0) {
+							displayAction(member[i]);
+							if (member[i][0] == 0) {
+								aliveMembers++;
+							}
+						}
+					}
+					if (aliveMembers > 0) {
+						newHour(aliveMembers);
+					}
+					//endGame();
+				}
 
-function makeAction() {
-	var aliveMembers = 0;
-	for (var i = 0; i <= document.getElementById('membersAmount').value-1; i++) {
-		if (member[i][0]==0){
-			displayAction(member[i]);
-			if (member[i][0]==0){
-				aliveMembers++;
-			}
-		}
-	}
-	if (aliveMembers>0){
-		newHour();
-	}
-	//endGame();
-}
+				function displayAction(activeMember) {
+					document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<p> <img src='" + activeMember[6] + "' width='80' height='80' /><p>" + activeMember[2] +
+						" " + activeMember[3] + ", " + activeMember[1] + ", " + activeMember[4] + " with " + activeMember[5] + " in hands, " +
+						getRandomAction(activeMember);
+				}
 
-function displayAction(activeMember){
-	document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<p> <img src='"+activeMember[6]+"' width='80' height='80' /><p>" + activeMember[2]
-		+" "+activeMember[3]+", "+activeMember[1]+", "+activeMember[4]+" with "+activeMember[5]+" in hands, "
-		+getRandomAction(activeMember);
-}
+				function newHour(aliveMembers) {
+					hour++;
+					if (aliveMembers>1){
+						member = shuffleArray(member);
+					}
+					document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br>" +
+						"<font color='red'>======== HOURS FROM COLLAPSE: " + hour + " ========</font><br><br>";
+					makeAction()
+				}
 
-function newHour(){
-	hour++;
-	member = shuffleArray(member);
-	document.getElementById("result").innerHTML = document.getElementById("result").innerHTML +"<br>"
-		+"<font color='olive'>HOURS FROM COLLAPSE: "+ hour +"</font><br><br>";
-	makeAction()
-}
+				function createMember() {
+					var gender = ["male", "female"];
+					var role = ["guard", "scientist", "technitian", "D-class", "visitor"];
 
-function createMember(){
-	var gender = ["male", "female"];
-	var role = ["guard", "scientist", "technitian", "D-class", "visitor"];
+					var activeMember = []
 
-	var activeMember = [,,,,,]
+					activeMember[0] = 0;
+					activeMember[1] = gender[Math.floor(Math.random() * (gender.length))];
+					activeMember[2] = getRandomFirstName(activeMember[1])
+					activeMember[3] = getRandomSecondName();
+					activeMember[4] = role[Math.floor(Math.random() * (role.length))];
+					activeMember[5] = getRandomWeapon();
+					activeMember[6] = "https://rawgit.com/drLemis/EscapeGames/master/images/" + activeMember[1] + "_avatar.jpg";
 
-	activeMember[0] = 0;
-	activeMember[1] = gender[Math.floor(Math.random()*(gender.length))];
-	activeMember[2] = getRandomFirstName(activeMember[1])
-	activeMember[3] = getRandomSecondName();
-	activeMember[4] = role[Math.floor(Math.random()*(role.length))];
-	activeMember[5] = getRandomWeapon();
-	activeMember[6] = "https://rawgit.com/drLemis/EscapeGames/master/images/"+activeMember[1]+"_avatar.jpg";
+					return activeMember;
 
-	return activeMember;
+				}
 
-}
+				function getRandomFirstName(gender) {
+					if (gender == "male") {
+						return maleFirstName[Math.floor(Math.random() * (maleFirstName.length))];
+					}
+					return femaleFirstName[Math.floor(Math.random() * (femaleFirstName.length))];
+				}
 
-function getRandomFirstName(gender){
-	if (gender=="male"){
-		return maleFirstName[Math.floor(Math.random()*(maleFirstName.length))];
-	}
-	return femaleFirstName[Math.floor(Math.random()*(femaleFirstName.length))];
-}
+				function getRandomSecondName() {
+					return secondName[Math.floor(Math.random() * (secondName.length))];
+				}
 
-function getRandomSecondName(){
-	return secondName[Math.floor(Math.random()*(secondName.length))];
-}
+				function getRandomWeapon(currentWeapon) {
+					var foundWeapon = weaponPool[Math.floor(Math.random() * (weaponPool.length))];
+					if (weaponPool.indexOf(currentWeapon) >= weaponPool.indexOf(foundWeapon)) {
+						return currentWeapon;
+					}
+					return foundWeapon;
+				}
 
-function getRandomWeapon(currentWeapon){
-	var foundWeapon = weaponPool[Math.floor(Math.random()*(weaponPool.length))];
-	if (weaponPool.indexOf(currentWeapon)>=weaponPool.indexOf(foundWeapon)){
-		return currentWeapon;
-	}
-	return foundWeapon;
-}
+				function getRandomAction(activeMember) {
+					var activeAction = statesPool[Math.floor(Math.random() * (statesPool.length))];
 
-function getRandomAction(activeMember){
-	var activeAction = statesPool[Math.floor(Math.random() * (statesPool.length))];
+					if (activeAction == "dies") {
+						var death = deathReasons[Math.floor(Math.random() * (deathReasons.length))];
+						if (death == ", commiting suicide") {
+							if (activeMember[4] == "D-class" || activeMember[4] == "guard") {
+								activeAction = getRandomAction(activeMember);
+								return activeAction;
+							}
+						}
 
-	if (activeAction=="dies"){
-		var death = deathReasons[Math.floor(Math.random() * (deathReasons.length))];
-		if (death==", commiting suicide"){
-			if (activeMember[4]=="D-class"||activeMember[4]=="guard"){
-				activeAction = getRandomAction(activeMember);
-				return activeAction;
-			}
-		}
+						if (death == " from SCP-") {
+							var number = SCPList[Math.floor(Math.random() * (SCPList.length))];
+							activeAction = "dies from <a target='_blank' href='http://scp.su/scp-" + number + "'>SCP-" + number + "</a>";
+							death = "";
+						}
 
-		if (death==" from SCP-"){
-			var number = SCPList[Math.floor(Math.random() * (SCPList.length))];
-			activeAction="dies from <a target='_blank' href='http://scp.su/scp-"+number+"'>SCP-"+number+"</a>";
-			death="";
-		}
+						activeAction = "<font color='red'>" + activeAction + death + "</font>"
+						activeMember[0] = 1;
+						return activeAction;
+					}
 
-		activeAction="<font color='red'>"+activeAction+death+"</font>"
-		activeMember[0]=1;
-		return activeAction;
-	}
+					if (activeAction == "reach the evacuation zone") {
+						activeAction = "<font color='green'>" + activeAction + "</font>"
+						activeMember[0] = 2;
+						return activeAction;
+					}
 
-	if (activeAction=="reach the evacuation zone"){
-		activeAction="<font color='green'>"+activeAction+"</font>"
-		activeMember[0]=2;
-		return activeAction;
-	}
+					if (activeAction == "found ") {
+						var tempWeapon = getRandomWeapon(activeMember[5]);
+						if (tempWeapon == activeMember[5]) {
+							activeAction = getRandomAction(activeMember);
+							return activeAction;
+						}
+						activeMember[5] = tempWeapon;
+						activeAction = activeAction + activeMember[5];
+						activeAction = "<font color='blue'>" + activeAction + "</font>"
+						return activeAction;
+					}
 
-	if (activeAction=="found "){
-		var tempWeapon = getRandomWeapon(activeMember[5]);
-		if (tempWeapon==activeMember[5]){
-			activeAction = getRandomAction(activeMember);
-			return activeAction;
-		}
-		activeMember[5]=tempWeapon;
-		activeAction = activeAction+activeMember[5];
-		activeAction="<font color='blue'>"+activeAction+"</font>"
-		return activeAction;
-	}
-
-	return activeAction;
-}
+					return activeAction;
+				}
 
 
-function httpGet(theUrl) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false );
-    xmlHttp.send( null );
-    return xmlHttp.responseText;
-  }
+				function httpGet(theUrl) {
+					var xmlHttp = new XMLHttpRequest();
+					xmlHttp.open("GET", theUrl, false);
+					xmlHttp.send(null);
+					return xmlHttp.responseText;
+				}
 
-function shuffleArray(array) {
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-    return array;
-}
-
-</script>
-</center>
+				function shuffleArray(array) {
+					for (var i = array.length - 1; i > 0; i--) {
+						var j = Math.floor(Math.random() * (i + 1));
+						var temp = array[i];
+						array[i] = array[j];
+						array[j] = temp;
+					}
+					return array;
+				}
+			</script>
+	</center>
 </body>
+
 </html>

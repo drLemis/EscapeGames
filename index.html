@@ -4,7 +4,7 @@
 <body bgcolor="#F0F0F0" text="black">
 	<center>
 		<p>Version: 0.1.6.1
-		<p id="generation">Amount of members:<input id="membersAmount" type="number" min="1" max="9001"> <button onclick="start()">Collapse!</button></p>
+			<p id="generation">Amount of members:<input id="membersAmount" type="number" min="1" max="9001"> <button onclick="start()">Collapse!</button></p>
 			<p id="result"></p>
 
 			<script>
@@ -22,20 +22,21 @@
 				var hourLog = "";
 
 				//colors
-				var colorAlert = "darkred";
-				var colorInfo = "navy";
-				var colorSafe = "green";
+				var colorAlert = "#ffb3b3";
+				var colorInfo = "#b3b3ff";
+				var colorSafe = "#b3ffb3";
 				var colorNeutral = "gray";
-				var colorContrast = "white";
+				var colorContrastFront = "white";
+				var colorContraslBack = "black";
 
-				function restart(){
+				function restart() {
 					document.getElementById("generation").innerHTML = 'Amount of members:<input id="membersAmount" type="number" min="1" max="9001"> <button onclick="start()">Collapse!';
 					document.getElementById("result").innerHTML = '';
 				}
 
 				function start() {
 					fullLog = "";
-					hourLog = "<font color='" + colorAlert + "'>======== COLLAPSE! ========</font><span><br>";
+					hourLog = "<span style='background-color:" + colorContraslBack + "'><font color='" + colorContrastFront + "'>======== COLLAPSE! ========</font><span><br>";
 					hour = 0;
 					if (+document.getElementById('membersAmount').value <= +document.getElementById('membersAmount').min) {
 						document.getElementById('membersAmount').value = document.getElementById('membersAmount').min;
@@ -67,17 +68,17 @@
 						}
 					}
 
-					fullLog = fullLog+"<br><br>"+hourLog;
+					fullLog = fullLog + "<br><br>" + hourLog;
 					// alert(member);
 					// alert(aliveMembers);
 
 
 
 					// if (aliveMembers > 0) {
-						// newHour(aliveMembers);
+					// newHour(aliveMembers);
 					// }
 
-					if (aliveMembers < 1 ){
+					if (aliveMembers < 1) {
 						document.getElementById("result").innerHTML = hourLog + "<br><br><button onclick='endGame()'>Full log!</button>";
 					} else {
 						document.getElementById("result").innerHTML = hourLog + "<br><br><button onclick='newHour()'>Next hour!</button>";
@@ -89,27 +90,24 @@
 
 				function displayAction(activeMember) {
 					// document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<p> <img src='" + activeMember[6] + "' width='80' height='80' /><p>" + activeMember[2] +
-						// " " + activeMember[3] + ", " + activeMember[1] + ", " + activeMember[4] + " with " + activeMember[5] + " in hands, " +
-						// getRandomAction(activeMember);
-						hourLog = hourLog + "<p> <img src='" + activeMember[6] + "' width='80' height='80' /><p>" + activeMember[2] +
-							" " + activeMember[3] + ", " + activeMember[1] + ", " + activeMember[4] + " with " + activeMember[5] + " in hands, " +
-							getRandomAction(activeMember);
+					// " " + activeMember[3] + ", " + activeMember[1] + ", " + activeMember[4] + " with " + activeMember[5] + " in hands, " +
+					// getRandomAction(activeMember);
+					hourLog = hourLog + "<p> <img src='" + activeMember[6] + "' width='80' height='80' /><p>" + activeMember[2] +
+						" " + activeMember[3] + ", " + activeMember[1] + ", " + activeMember[4] + " with " + activeMember[5] + " in hands, " +
+						getRandomAction(activeMember);
 				}
 
-				function endGame(){
+				function endGame() {
 					document.getElementById("generation").innerHTML = 'Amount of members:<input id="membersAmount" type="number" min="1" max="9001"> <button onclick="start()">Collapse!</button>';
 					document.getElementById("result").innerHTML = fullLog.replace("<br><br>", "");
 				}
 
 				function newHour(aliveMembers) {
 					hour++;
-					if (aliveMembers>1){
+					if (aliveMembers > 1) {
 						member = shuffleArray(member);
 					}
-					// document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br>" +
-						// "<font color='red'>======== HOURS FROM COLLAPSE: " + hour + " ========</font><br><br>";
-
-						hourLog = "<font color='" + colorAlert + "'>======== HOURS FROM COLLAPSE: " + hour + " ========</font><br>";
+					hourLog = "<span style='background-color:" + colorContraslBack + "'><font color='" + colorContrastFront + "'>======== HOURS FROM COLLAPSE: " + hour + " ========</font></span><br>";
 					makeAction()
 				}
 
@@ -168,13 +166,13 @@
 							death = "";
 						}
 
-						activeAction = "<span style='background-color:#ffb3b3'>" + activeAction + death + "</span>"
+						activeAction = "<span style='background-color:" + colorAlert + "'>" + activeAction + death + "</span>"
 						activeMember[0] = 1;
 						return activeAction;
 					}
 
 					if (activeAction == "reach the evacuation zone") {
-						activeAction = "<span style='background-color:#b3ffb3'>" + activeAction + "</span>"
+						activeAction = "<span style='background-color:" + colorSafe + "'>" + activeAction + "</span>"
 						activeMember[0] = 2;
 						return activeAction;
 					}
@@ -187,7 +185,7 @@
 						}
 						activeMember[5] = tempWeapon;
 						activeAction = activeAction + activeMember[5];
-						activeAction = "<span style='background-color:#b3b3ff'>" + activeAction + "</span>"
+						activeAction = "<span style='background-color:" + colorInfo + "'>" + activeAction + "</span>"
 						return activeAction;
 					}
 

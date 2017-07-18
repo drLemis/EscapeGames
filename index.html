@@ -3,6 +3,7 @@
 
 <body bgcolor="#F0F0F0" text="black">
 	<center>
+		<p>Version: 0.1.2
 		<p>Amount of members:<input id="membersAmount" type="number" min="1" max="100">
 			<button onclick="start()">Collapse!</button>
 			<p id="result"></p>
@@ -32,7 +33,7 @@
 
 					for (var i = 0; i < document.getElementById('membersAmount').value; i++) {
 						member[i] = createMember();
-						// alert(member[i][2]+" "+member[i][3])
+						alert(member[i][2]+" "+member[i][3])
 					}
 					makeAction();
 				}
@@ -47,6 +48,11 @@
 							}
 						}
 					}
+
+
+					alert(member);
+					alert(aliveMembers);
+
 					if (aliveMembers > 0) {
 						newHour(aliveMembers);
 					}
@@ -68,6 +74,7 @@
 				}
 
 				function newHour(aliveMembers) {
+
 					hour++;
 					if (aliveMembers>1){
 						member = shuffleArray(member);

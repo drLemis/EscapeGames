@@ -3,7 +3,7 @@
 
 <body bgcolor="#F0F0F0" text="black">
 	<center>
-		<p>Version: 0.1.6
+		<p>Version: 0.1.6.1
 		<p id="generation">Amount of members:<input id="membersAmount" type="number" min="1" max="9001"> <button onclick="start()">Collapse!</button></p>
 			<p id="result"></p>
 
@@ -168,13 +168,13 @@
 							death = "";
 						}
 
-						activeAction = "<font color='" + colorAlert + "'>" + activeAction + death + "</font>"
+						activeAction = "<span style='background-color:#ffb3b3'>" + activeAction + death + "</span>"
 						activeMember[0] = 1;
 						return activeAction;
 					}
 
 					if (activeAction == "reach the evacuation zone") {
-						activeAction = "<font color='" + colorSafe + "'>" + activeAction + "</font>"
+						activeAction = "<span style='background-color:#b3ffb3'>" + activeAction + "</span>"
 						activeMember[0] = 2;
 						return activeAction;
 					}
@@ -187,7 +187,7 @@
 						}
 						activeMember[5] = tempWeapon;
 						activeAction = activeAction + activeMember[5];
-						activeAction = "<font color='" + colorInfo + "'>" + activeAction + "</font>"
+						activeAction = "<span style='background-color:#b3b3ff'>" + activeAction + "</span>"
 						return activeAction;
 					}
 

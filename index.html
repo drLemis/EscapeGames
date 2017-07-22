@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 
-<body bgcolor="#F0F0F0" text="black">
+<body bgcolor="#F0F0F0" text="black" style='font-size:100%'>
 	<center>
-		<p>Version: 0.1.6.2
+		<p>Version: 0.1.6.3
 			<p id="generation">Amount of members:<input id="membersAmount" type="number" min="1" max="9001"> <button onclick="start()">Collapse!</button></p>
 			<p id="result"></p>
 
@@ -27,16 +27,16 @@
 				var colorSafe = "#b3ffb3";
 				var colorNeutral = "gray";
 				var colorContrastFront = "white";
-				var colorContraslBack = "black";
+				var colorContrastBack = "black";
 
 				function restart() {
-					document.getElementById("generation").innerHTML = 'Amount of members:<input id="membersAmount" type="number" min="1" max="9001"> <button onclick="start()">Collapse!';
+					document.getElementById("generation").innerHTML = 'Amount of members:<input id="membersAmount" type="number" min="1" max="100"> <button onclick="start()">Collapse!';
 					document.getElementById("result").innerHTML = '';
 				}
 
 				function start() {
 					fullLog = "";
-					hourLog = "<span style='background-color:" + colorContraslBack + "'><font color='" + colorContrastFront + "'>======== COLLAPSE! ========</font><span><br>";
+					hourLog = "<span style='background-color:" + colorContrastBack + "'><font color='" + colorContrastFront + "'>======== COLLAPSE! ========</font><span><br>";
 					hour = 0;
 					if (+document.getElementById('membersAmount').value <= +document.getElementById('membersAmount').min) {
 						document.getElementById('membersAmount').value = document.getElementById('membersAmount').min;
@@ -93,7 +93,7 @@
 					if (aliveMembers > 1) {
 						member = shuffleArray(member);
 					}
-					hourLog = "<span style='background-color:" + colorContraslBack + "'><font color='" + colorContrastFront + "'>======== HOURS FROM COLLAPSE: " + hour + " ========</font></span><br>";
+					hourLog = "<span style='background-color:" + colorContrastBack + "'><font color='" + colorContrastFront + "'>======== HOURS FROM COLLAPSE: " + hour + " ========</font></span><br>";
 					makeAction()
 				}
 
@@ -132,6 +132,10 @@
 						return currentWeapon;
 					}
 					return foundWeapon;
+				}
+
+				function getIndexOfWeapon(currentWeapon){
+					return weaponPool.indexOf(currentWeapon);
 				}
 
 				function getRandomAction(activeMember) {
